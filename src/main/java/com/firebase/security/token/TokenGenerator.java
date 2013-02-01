@@ -49,7 +49,7 @@ public class TokenGenerator {
 		
 		try {
 			claims.put("v", TOKEN_VERSION);
-			claims.put("iat", new Date().getTime());
+			claims.put("iat", new Date().getTime() / 1000);
 			
 			if(data != null && data.length() > 0) {
 				claims.put("d", data);
@@ -58,11 +58,11 @@ public class TokenGenerator {
 			// Handle options
 			if(options != null) {
 				if(options.getExpires() != null) {
-					claims.put("exp", options.getExpires().getTime());
+					claims.put("exp", options.getExpires().getTime() / 1000);
 				}
 				
 				if(options.getNotBefore() != null) {
-					claims.put("nbf", options.getNotBefore().getTime());
+					claims.put("nbf", options.getNotBefore().getTime() / 1000);
 				}
 				
 				// Only add these claims if they're true to avoid sending them over the wire when false.
