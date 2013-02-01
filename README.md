@@ -9,7 +9,7 @@ To generate a token with an arbitrary auth payload:
 JSONObject arbitraryPayload = new JSONObject();
 try {
     arbitraryPayload.put("some", "arbitrary");
-       arbitraryPayload.put("data", "here");
+    arbitraryPayload.put("data", "here");
 } catch (JSONException e) {
     e.printStackTrace();
 }   
