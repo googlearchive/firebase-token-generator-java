@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.firebase</groupId>
+  <artifactId>firebase-token-generator</artifactId>
+  <version>1.0.0</version>
+  <name>Firebase token generator</name>
+  <description>Library for generating Firebase authentication tokens from Java.</description>
+  <organization>
+    <name>Firebase</name>
+    <url>https://www.firebase.com/</url>
+  </organization>
+  <url>https://www.firebase.com/docs/security/authentication.html</url>
+  <scm>
+    <connection>scm:git:git://github.com/firebase/firebase-token-generator-java.git</connection>
+    <developerConnection>scm:git:git@github.com:firebase/firebase-token-generator-java.git</developerConnection>
+    <url>https://github.com/firebase/firebase-token-generator-java</url>
+  </scm>
+  <licenses>
+    <license>
+      <name>MIT</name>
+      <url>http://firebase.mit-license.org</url>
+    </license>
+  </licenses>
+  <dependencies>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20090211</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.7</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
