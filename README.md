@@ -2,6 +2,19 @@
 
 Library for generating Firebase authentication tokens from Java.
 
+## Installation
+The easiest way to install is via Maven. Add this dependency to your project:
+
+```
+<dependency>
+  <groupId>com.firebase</groupId>
+  <artifactId>firebase-token-generator</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
+Else, you can download and compile it yourself.
+
 ## Usage
 To generate a token with an arbitrary auth payload:
 
