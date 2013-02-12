@@ -44,3 +44,7 @@ System.out.println(token);
 ```
 
 See the [Firebase Authentication Docs](https://www.firebase.com/docs/security/authentication.html) for more information about authentication tokens.
+
+License
+-------
+[MIT](http://firebase.mit-license.org)
