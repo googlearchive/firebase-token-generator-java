@@ -33,4 +33,14 @@ String token = tokenGenerator.createToken(arbitraryPayload);
 System.out.println(token);
 ```
 
+You can also specify custom options via a second argument to CreateToken.  For example, to create an admin token, you could use:
+
+```
+TokenGenerator tokenGenerator = new TokenGenerator("supersecretkey");
+TokenOptions tokenOptions = new TokenOptions();
+tokenOptions.setAdmin(true);
+String token = tokenGenerator.createToken(null, tokenOptions);
+System.out.println(token);
+```
+
 See the [Firebase Authentication Docs](https://www.firebase.com/docs/security/authentication.html) for more information about authentication tokens.
