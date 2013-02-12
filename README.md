@@ -33,7 +33,7 @@ String token = tokenGenerator.createToken(arbitraryPayload);
 System.out.println(token);
 ```
 
-You can also specify custom options via a second argument to CreateToken.  For example, to create an admin token, you could use:
+You can also specify custom options via a second argument to createToken().  For example, to create an admin token, you could use:
 
 ```
 TokenGenerator tokenGenerator = new TokenGenerator("supersecretkey");
