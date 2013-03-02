@@ -1,5 +1,7 @@
 package com.firebase.security.token;
 
+import java.io.UnsupportedEncodingException;
+import java.lang.System;
 import java.nio.charset.Charset;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -49,12 +51,15 @@ public class JWTEncoder {
 			Mac sha256_HMAC = Mac.getInstance(HMAC_256);
 			SecretKeySpec secret_key = new SecretKeySpec(secret.getBytes(UTF8_CHARSET), HMAC_256);
 			sha256_HMAC.init(secret_key);
-			result = Hex.encodeHexString(sha256_HMAC.doFinal(secureBits.getBytes(UTF8_CHARSET)));
+      byte sig[] = sha256_HMAC.doFinal(secureBits.getBytes(UTF8_CHARSET));
+      result = new String(Base64.encodeBase64URLSafe(sig), "UTF-8");
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
-		}
+		} catch (UnsupportedEncodingException e) {
+      e.printStackTrace();
+    }
 		return result;
 	}
 
