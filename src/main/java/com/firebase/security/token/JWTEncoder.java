@@ -1,16 +1,11 @@
 package com.firebase.security.token;
 
-import java.io.UnsupportedEncodingException;
-import java.lang.System;
 import java.nio.charset.Charset;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.binary.Hex;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,15 +46,11 @@ public class JWTEncoder {
 			Mac sha256_HMAC = Mac.getInstance(HMAC_256);
 			SecretKeySpec secret_key = new SecretKeySpec(secret.getBytes(UTF8_CHARSET), HMAC_256);
 			sha256_HMAC.init(secret_key);
-      byte sig[] = sha256_HMAC.doFinal(secureBits.getBytes(UTF8_CHARSET));
-      result = new String(Base64.encodeBase64URLSafe(sig), "UTF-8");
-		} catch (NoSuchAlgorithmException e) {
+			byte sig[] = sha256_HMAC.doFinal(secureBits.getBytes(UTF8_CHARSET));
+			result = Base64.encodeBase64URLSafeString(sig);
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
-    }
+		}
 		return result;
 	}
 
@@ -75,7 +66,7 @@ public class JWTEncoder {
 	}
 	
 	private static String encodeJson(JSONObject jsonData) {
-		return Base64.encodeBase64String(jsonData.toString().getBytes(UTF8_CHARSET));
+		return Base64.encodeBase64URLSafeString(jsonData.toString().getBytes(UTF8_CHARSET));
 	}
 
 }
