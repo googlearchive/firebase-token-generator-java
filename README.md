@@ -13,7 +13,13 @@ The easiest way to install is via Maven. Add this dependency to your project:
 </dependency>
 ```
 
-Else, you can download and compile it yourself.
+Otherwise, you can download the source and directly use it in your project. The
+token generator has two run time dependencies:
+
+1. commons-codec-1.7.jar
+2. json-20090211.jar
+
+Unit tests depend on jUnit 4.11.
 
 ## Usage
 To generate a token with an arbitrary auth payload:
