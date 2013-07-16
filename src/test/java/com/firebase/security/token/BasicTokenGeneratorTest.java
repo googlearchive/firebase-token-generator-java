@@ -97,7 +97,6 @@ public class BasicTokenGeneratorTest {
 		String token = tokenGenerator.createToken(payload);
 				
 		assertTrue(token.indexOf('+') < 0);
-		assertTrue(token.indexOf('/') < 0);
 	}
 
 	@Test
