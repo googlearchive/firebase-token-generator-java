@@ -1,6 +1,7 @@
 package com.firebase.security.token;
 
 import java.util.Date;
+import java.lang.IllegalArgumentException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,7 +47,7 @@ public class TokenGenerator {
 	 */
 	public String createToken(JSONObject data, TokenOptions options) {
 		if ((data == null || data.length() == 0) && (options == null || (!options.isAdmin() && !options.isDebug()))) {
-			throw new Error("TokenGenerator.createToken: data is empty and no options are set.  This token will have no effect on Firebase.");
+			throw new IllegalArgumentException("TokenGenerator.createToken: data is empty and no options are set.  This token will have no effect on Firebase.");
 		}
 
 		JSONObject claims = new JSONObject();

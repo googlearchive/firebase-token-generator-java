@@ -41,15 +41,12 @@ public class BasicTokenGeneratorTest {
 	
 	private final String FIREBASE_SUPER_SECRET_KEY = "moozooherpderp";
 	
-	@Test
+	@Test(expected=java.lang.IllegalArgumentException.class)
 	public void checkIfBasicLength() {
 		JSONObject payload = new JSONObject();
 		
 		TokenGenerator tokenGenerator = new TokenGenerator("x");
 		String token = tokenGenerator.createToken(payload);
-		
-		assertNotNull(token);
-		assertTrue("Generated token isn't the minimum length for a signed JWT token", token.length() > 100);
 	}
 	
 	@Test
