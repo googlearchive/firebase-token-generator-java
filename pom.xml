@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.firebase</groupId>
   <artifactId>firebase-token-generator</artifactId>
-  <version>1.0.5</version>
+  <version>1.0.6-SNAPSHOT</version>
   <name>Firebase token generator</name>
   <description>Library for generating Firebase authentication tokens from Java.</description>
   <parent>
