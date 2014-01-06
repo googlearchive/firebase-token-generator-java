@@ -28,8 +28,8 @@ public class TokenOptions {
 	/**
 	 * Parametrized constructor.
 	 * 
-	 * @param expires The date/time before which the token should not be considered valid. (default is now).
-	 * @param notBefore The date/time at which the token should no longer be considered valid. (default is never).
+	 * @param expires The date/time at which the token should no longer be considered valid. (default is never).
+	 * @param notBefore The date/time before which the token should not be considered valid. (default is now).
 	 * @param admin Set to true to bypass all security rules (you can use this for trusted server code).
 	 * @param debug Set to true to enable debug mode (so you can see the results of Rules API operations).
 	 */
