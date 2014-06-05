@@ -5,9 +5,10 @@ import java.nio.charset.Charset;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.codec.binary.Base64;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.util.Base64;
 
 /**
  * JWT encoder.
@@ -47,7 +48,7 @@ public class JWTEncoder {
 			SecretKeySpec secret_key = new SecretKeySpec(secret.getBytes(UTF8_CHARSET), HMAC_256);
 			sha256_HMAC.init(secret_key);
 			byte sig[] = sha256_HMAC.doFinal(secureBits.getBytes(UTF8_CHARSET));
-			result = Base64.encodeBase64URLSafeString(sig);
+			result = Base64.encodeToString(sig, Base64.NO_WRAP);			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -65,8 +66,8 @@ public class JWTEncoder {
 		return encodeJson(headerJson);
 	}
 	
-	private static String encodeJson(JSONObject jsonData) {
-		return Base64.encodeBase64URLSafeString(jsonData.toString().getBytes(UTF8_CHARSET));
+	private static String encodeJson(JSONObject jsonData) {		
+		return Base64.encodeToString(jsonData.toString().getBytes(), Base64.NO_WRAP);		
 	}
 
 }
