@@ -20,8 +20,8 @@ to your project:
 </dependency>
 ```
 
-Otherwise, you can download the source and directly use it in your project. The
-token generator has two run time dependencies:
+Otherwise, you can download the source and directly use it in your project. The token generator
+has two run time dependencies:
 
 1. `commons-codec-1.7.jar`
 2. `json-20090211.jar`
@@ -41,8 +41,8 @@ never share your Firebase Secret with a connected client.
 To generate tokens, you'll need your Firebase Secret which you can find by entering your Firebase
 URL into a browser and clicking the "Secrets" tab on the left-hand navigation menu.
 
-Once you've downloaded the library and grabbed your Firebase Secret, you can
-generate a token with this snippet of Java code:
+Once you've downloaded the library and grabbed your Firebase Secret, you can generate a token with
+this snippet of Java code:
 
 ```java
 JSONObject arbitraryPayload = new JSONObject();
@@ -68,19 +68,19 @@ Firebase rules.
 A second `options` argument can be passed to `createToken()` to modify how Firebase treats the
 token. The `TokenOptions` object has the following methods:
 
-* **setExpires(Date)** - A timestamp denoting the time
-after which this token should no longer be valid.
+* **setExpires(Date)** - A timestamp denoting the time after which this token should no longer
+be valid.
 
-* **setNotBefore(Date)** - A timestamp denoting the time
-before which this token should be rejected by the server.
+* **setNotBefore(Date)** - A timestamp denoting the time before which this token should be
+rejected by the server.
 
-* **setAdmin(boolean)** - Set to `true` if you want to disable all
-security rules for this client. This will
-provide the client with read and write access to your entire Firebase.
+* **setAdmin(boolean)** - Set to `true` if you want to disable all security rules for this
+client. This will provide the client with read and write access to your entire Firebase.
 
-* **setDebug(boolean)** - Set to `true` to enable debug output from your security rules. You should
-generally *not* leave this set to `True` in production (as it slows down the rules implementation
-and gives your users visibility into your rules), but it can be helpful for debugging.
+* **setDebug(boolean)** - Set to `true` to enable debug output from your security rules. You
+should generally *not* leave this set to `True` in production (as it slows down the rules
+implementation and gives your users visibility into your rules), but it can be helpful for
+debugging.
 
 Here is an example of how to use the second `options` argument:
 
