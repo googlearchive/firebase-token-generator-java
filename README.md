@@ -45,16 +45,16 @@ Once you've downloaded the library and grabbed your Firebase Secret, you can gen
 this snippet of Java code:
 
 ```java
-JSONObject arbitraryPayload = new JSONObject();
+JSONObject arbitraryAuthPayload = new JSONObject();
 try {
-  arbitraryPayload.put("some", "arbitrary");
-  arbitraryPayload.put("data", "here");
+  arbitraryAuthPayload.put("some", "arbitrary");
+  arbitraryAuthPayload.put("data", "here");
 } catch (JSONException e) {
   e.printStackTrace();
 }
 
 TokenGenerator tokenGenerator = new TokenGenerator("<YOUR_FIREBASE_SECRET>");
-String token = tokenGenerator.createToken(arbitraryPayload);
+String token = tokenGenerator.createToken(arbitraryAuthPayload);
 ```
 
 The arbitrary payload object passed into `createToken()` is then available for use within your
@@ -85,10 +85,10 @@ debugging.
 Here is an example of how to use the second `options` argument:
 
 ```java
-JSONObject arbitraryPayload = new JSONObject();
+JSONObject arbitraryAuthPayload = new JSONObject();
 try {
-  arbitraryPayload.put("some", "arbitrary");
-  arbitraryPayload.put("data", "here");
+  arbitraryAuthPayload.put("some", "arbitrary");
+  arbitraryAuthPayload.put("data", "here");
 } catch (JSONException e) {
   e.printStackTrace();
 }
@@ -97,5 +97,5 @@ TokenOptions tokenOptions = new TokenOptions();
 tokenOptions.setAdmin(true);
 
 TokenGenerator tokenGenerator = new TokenGenerator("<YOUR_FIREBASE_SECRET>");
-String token = tokenGenerator.createToken(arbitraryPayload, tokenOptions);
+String token = tokenGenerator.createToken(arbitraryAuthPayload, tokenOptions);
 ```
