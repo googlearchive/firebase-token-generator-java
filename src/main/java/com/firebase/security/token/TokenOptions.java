@@ -34,8 +34,8 @@ public class TokenOptions {
      */
     public TokenOptions(Date expires, Date notBefore, boolean admin, boolean debug) {
         super();
-        this.expires = expires;
-        this.notBefore = notBefore;
+        this.expires = (expires != null) ? new Date(expires.getTime()) : null;
+        this.notBefore = (notBefore != null) ? new Date(notBefore.getTime()) : null;
         this.admin = admin;
         this.debug = debug;
     }
@@ -51,7 +51,7 @@ public class TokenOptions {
      * @param expires the expires to set
      */
     public void setExpires(Date expires) {
-        this.expires = expires;
+        this.expires = (expires != null) ? new Date(expires.getTime()) : null;
     }
 
     /**
@@ -65,7 +65,7 @@ public class TokenOptions {
      * @param notBefore the notBefore to set
      */
     public void setNotBefore(Date notBefore) {
-        this.notBefore = notBefore;
+        this.notBefore = (notBefore != null) ? new Date(notBefore.getTime()) : null;
     }
 
     /**
