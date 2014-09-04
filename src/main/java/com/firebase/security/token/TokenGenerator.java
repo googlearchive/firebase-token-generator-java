@@ -14,7 +14,7 @@ public class TokenGenerator {
 
     private static final int TOKEN_VERSION = 0;
 
-    private String firebaseSecret;
+    private final String firebaseSecret;
 
     /**
      * Default constructor given a Firebase secret.
