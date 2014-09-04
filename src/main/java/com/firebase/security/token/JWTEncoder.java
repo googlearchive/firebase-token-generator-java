@@ -27,7 +27,6 @@ public class JWTEncoder {
      * @return
      */
     public static String encode(JSONObject claims, String secret) {
-
         String encodedHeader = getCommonHeader();
         String encodedClaims = encodeJson(claims);
 

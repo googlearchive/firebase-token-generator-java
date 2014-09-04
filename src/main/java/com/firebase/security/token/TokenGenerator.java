@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Firebase JWT token generator.
@@ -32,7 +33,7 @@ public class TokenGenerator {
      * @param data
      * @return
      */
-    public String createToken(JSONObject data) {
+    public String createToken(Map<String, Object> data) {
         return createToken(data, new TokenOptions());
     }
 
@@ -43,8 +44,8 @@ public class TokenGenerator {
      * @param options
      * @return
      */
-    public String createToken(JSONObject data, TokenOptions options) {
-        if ((data == null || data.length() == 0) && (options == null || (!options.isAdmin() && !options.isDebug()))) {
+    public String createToken(Map<String, Object> data, TokenOptions options) {
+        if ((data == null || data.size() == 0) && (options == null || (!options.isAdmin() && !options.isDebug()))) {
             throw new IllegalArgumentException("TokenGenerator.createToken: data is empty and no options are set.  This token will have no effect on Firebase.");
         }
 
@@ -54,8 +55,8 @@ public class TokenGenerator {
             claims.put("v", TOKEN_VERSION);
             claims.put("iat", new Date().getTime() / 1000);
 
-            if (data != null && data.length() > 0) {
-                claims.put("d", data);
+            if (data != null && data.size() > 0) {
+                claims.put("d", new JSONObject(data));
             }
 
             // Handle options
