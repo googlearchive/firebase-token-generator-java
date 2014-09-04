@@ -39,32 +39,29 @@ public class JWTEncoder {
     }
 
     private static String sign(String secret, String secureBits) {
-        String result = null;
         try {
             Mac sha256_HMAC = Mac.getInstance(HMAC_256);
             SecretKeySpec secret_key = new SecretKeySpec(secret.getBytes(UTF8_CHARSET), HMAC_256);
             sha256_HMAC.init(secret_key);
             byte sig[] = sha256_HMAC.doFinal(secureBits.getBytes(UTF8_CHARSET));
-            result = Base64.encodeBase64URLSafeString(sig);
+            return Base64.encodeBase64URLSafeString(sig);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return result;
     }
 
     private static String getCommonHeader() {
-        JSONObject headerJson = new JSONObject();
         try {
+            JSONObject headerJson = new JSONObject();
             headerJson.put("typ", "JWT");
             headerJson.put("alg", "HS256");
+            return encodeJson(headerJson);
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return encodeJson(headerJson);
     }
 
     private static String encodeJson(JSONObject jsonData) {
         return Base64.encodeBase64URLSafeString(jsonData.toString().getBytes(UTF8_CHARSET));
     }
-
 }

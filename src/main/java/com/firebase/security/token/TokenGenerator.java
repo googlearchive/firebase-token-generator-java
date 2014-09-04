@@ -78,7 +78,7 @@ public class TokenGenerator {
                 }
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         return computeToken(claims);
