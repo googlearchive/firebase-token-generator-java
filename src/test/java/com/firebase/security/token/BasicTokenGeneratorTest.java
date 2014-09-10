@@ -54,6 +54,7 @@ public class BasicTokenGeneratorTest {
     @Test
     public void checkBasicStructureHasCorrectNumberOfFragments() {
         Map<String, Object> payload = new HashMap<String, Object>();
+        payload.put("uid", "1");
         payload.put("abc", "0123456789~!@#$%^&*()_+-=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./;'[]\\<>?\"{}|");
 
         TokenGenerator tokenGenerator = new TokenGenerator(FIREBASE_SUPER_SECRET_KEY);
@@ -67,6 +68,7 @@ public class BasicTokenGeneratorTest {
     @Test
     public void checkIfResultProperlyDoesNotHavePadding() {
         Map<String, Object> payload = new HashMap<String, Object>();
+        payload.put("uid", "1");
         payload.put("abc", "0123456789~!@#$%^&*()_+-=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./;'[]\\<>?\"{}|");
 
         TokenGenerator tokenGenerator = new TokenGenerator(FIREBASE_SUPER_SECRET_KEY);
@@ -78,6 +80,7 @@ public class BasicTokenGeneratorTest {
     @Test
     public void checkIfResultIsUrlSafePlusSign() {
         Map<String, Object> payload = new HashMap<String, Object>();
+        payload.put("uid", "1");
         payload.put("abc", "0123456789~!@#$%^&*()_+-=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./;'[]\\<>?\"{}|");
 
         TokenGenerator tokenGenerator = new TokenGenerator(FIREBASE_SUPER_SECRET_KEY);
@@ -89,6 +92,7 @@ public class BasicTokenGeneratorTest {
     @Test
     public void checkIfResultIsUrlSafePlusSlash() {
         Map<String, Object> payload = new HashMap<String, Object>();
+        payload.put("uid", "1");
         payload.put("abc", "0123456789~!@#$%^&*()_+-=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./;'[]\\<>?\"{}|");
 
         TokenGenerator tokenGenerator = new TokenGenerator(FIREBASE_SUPER_SECRET_KEY);
@@ -100,6 +104,7 @@ public class BasicTokenGeneratorTest {
     @Test
     public void checkIfResultHasWhiteSpace() {
         Map<String, Object> payload = new HashMap<String, Object>();
+        payload.put("uid", "1");
         payload.put("a", "apple");
         payload.put("b", "banana");
         payload.put("c", "carrot");
@@ -130,6 +135,7 @@ public class BasicTokenGeneratorTest {
     public void basicInspectionTest() {
         String customData = "0123456789~!@#$%^&*()_+-=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./;'[]\\<>?\"{}|";
         Map<String, Object> payload = new HashMap<String, Object>();
+        payload.put("uid", "1");
         payload.put("abc", customData);
 
         TokenGenerator tokenGenerator = new TokenGenerator(FIREBASE_SUPER_SECRET_KEY);
@@ -171,6 +177,102 @@ public class BasicTokenGeneratorTest {
         } catch (JSONException e) {
             fail(e.getMessage());
         }
+    }
+
+    @Test(expected = java.lang.IllegalArgumentException.class)
+    public void requireUidInPayload() {
+        Map<String, Object> payload = new HashMap<String, Object>();
+        payload.put("abc", "0123456789~!@#$%^&*()_+-=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,./;'[]\\<>?\"{}|");
+
+        TokenGenerator tokenGenerator = new TokenGenerator(FIREBASE_SUPER_SECRET_KEY);
+        String token = tokenGenerator.createToken(payload);
+    }
+
+    @Test(expected = java.lang.IllegalArgumentException.class)
+    public void requireUidStringInPayload() {
+        Map<String, Object> payload = new HashMap<String, Object>();
+        payload.put("uid", 1);
+
+        TokenGenerator tokenGenerator = new TokenGenerator(FIREBASE_SUPER_SECRET_KEY);
+        String token = tokenGenerator.createToken(payload);
+    }
+
+    @Test
+    public void allowMaxLengthUid() {
+        Map<String, Object> payload = new HashMap<String, Object>();
+        //                          10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160       170       180       190       200       210       220       230       240       250   256
+        payload.put("uid", "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456");
+
+        TokenGenerator tokenGenerator = new TokenGenerator(FIREBASE_SUPER_SECRET_KEY);
+        String token = tokenGenerator.createToken(payload);
+    }
+
+    @Test(expected = java.lang.IllegalArgumentException.class)
+    public void disallowUidTooLong() {
+        Map<String, Object> payload = new HashMap<String, Object>();
+        //                          10        20        30        40        50        60        70        80        90       100       110       120       130       140       150       160       170       180       190       200       210       220       230       240       250    257
+        payload.put("uid", "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567");
+
+        TokenGenerator tokenGenerator = new TokenGenerator(FIREBASE_SUPER_SECRET_KEY);
+        String token = tokenGenerator.createToken(payload);
+    }
+
+    @Test
+    public void allowEmptyStringUid() {
+        Map<String, Object> payload = new HashMap<String, Object>();
+        payload.put("uid", "");
+
+        TokenGenerator tokenGenerator = new TokenGenerator(FIREBASE_SUPER_SECRET_KEY);
+        String token = tokenGenerator.createToken(payload);
+    }
+
+    @Test(expected = java.lang.RuntimeException.class)
+    public void disallowTokensTooLong() {
+        Map<String, Object> payload = new HashMap<String, Object>();
+        payload.put("uid", "blah");
+        payload.put("longVar", "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345612345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234561234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456");
+
+        TokenGenerator tokenGenerator = new TokenGenerator(FIREBASE_SUPER_SECRET_KEY);
+        String token = tokenGenerator.createToken(payload);
+    }
+
+    @Test
+    public void allowNoUidWithAdmin() {
+        TokenOptions tokenOptions = new TokenOptions();
+        tokenOptions.setAdmin(true);
+
+        TokenGenerator tokenGenerator = new TokenGenerator(FIREBASE_SUPER_SECRET_KEY);
+        String token = tokenGenerator.createToken(null, tokenOptions);
+        Map<String, Object> payload1 = new HashMap<String, Object>();
+        String token1 = tokenGenerator.createToken(payload1, tokenOptions);
+        Map<String, Object> payload2 = new HashMap<String, Object>();
+        payload2.put("foo", "bar");
+        String token2 = tokenGenerator.createToken(payload2, tokenOptions);
+        Map<String, Object> payload3 = new HashMap<String, Object>();
+    }
+
+    @Test(expected = java.lang.IllegalArgumentException.class)
+    public void disallowInvalidUidWithAdmin1() {
+        Map<String, Object> payload = new HashMap<String, Object>();
+        payload.put("uid", 1);
+
+        TokenOptions tokenOptions = new TokenOptions();
+        tokenOptions.setAdmin(true);
+
+        TokenGenerator tokenGenerator = new TokenGenerator(FIREBASE_SUPER_SECRET_KEY);
+        String token = tokenGenerator.createToken(payload, tokenOptions);
+    }
+
+    @Test(expected = java.lang.IllegalArgumentException.class)
+    public void disallowInvalidUidWithAdmin2() {
+        Map<String, Object> payload = new HashMap<String, Object>();
+        payload.put("uid", null);
+
+        TokenOptions tokenOptions = new TokenOptions();
+        tokenOptions.setAdmin(true);
+
+        TokenGenerator tokenGenerator = new TokenGenerator(FIREBASE_SUPER_SECRET_KEY);
+        String token = tokenGenerator.createToken(payload, tokenOptions);
     }
 
 }
