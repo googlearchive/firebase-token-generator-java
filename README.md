@@ -45,18 +45,21 @@ Once you've downloaded the library and grabbed your Firebase Secret, you can gen
 this snippet of Java code:
 
 ```java
-Map<String, Object> arbitraryAuthPayload = new HashMap<String, Object>();
-arbitraryAuthPayload.put("some", "arbitrary");
-arbitraryAuthPayload.put("data", "here");
+Map<String, Object> authPayload = new HashMap<String, Object>();
+authPayload.put("uid", "1");
+authPayload.put("some", "arbitrary");
+authPayload.put("data", "here");
 
 TokenGenerator tokenGenerator = new TokenGenerator("<YOUR_FIREBASE_SECRET>");
-String token = tokenGenerator.createToken(arbitraryAuthPayload);
+String token = tokenGenerator.createToken(authPayload);
 ```
 
-The arbitrary payload object passed into `createToken()` is then available for use within your
+The payload object passed into `createToken()` is then available for use within your
 security rules via the [`auth` variable](https://www.firebase.com/docs/security/api/rule/auth.html).
-This is how you pass trusted authentication details (e.g. the client's user ID) into your
-Firebase rules.
+This is how you pass trusted authentication details (e.g. the client's user ID) to your
+Firebase security rules. The payload can contain any data of your choosing, however it
+must contain a "uid" key, which must be a string of less than 256 characters. The
+generated token must be less than 1024 characters in total.
 
 
 ## Token Options
@@ -81,13 +84,14 @@ debugging.
 Here is an example of how to use the second `options` argument:
 
 ```java
-Map<String, Object> arbitraryAuthPayload = new HashMap<String, Object>();
-arbitraryAuthPayload.put("some", "arbitrary");
-arbitraryAuthPayload.put("data", "here");
+Map<String, Object> authPayload = new HashMap<String, Object>();
+authPayload.put("uid", "1");
+authPayload.put("some", "arbitrary");
+authPayload.put("data", "here");
 
 TokenOptions tokenOptions = new TokenOptions();
 tokenOptions.setAdmin(true);
 
 TokenGenerator tokenGenerator = new TokenGenerator("<YOUR_FIREBASE_SECRET>");
-String token = tokenGenerator.createToken(arbitraryAuthPayload, tokenOptions);
+String token = tokenGenerator.createToken(authPayload, tokenOptions);
 ```

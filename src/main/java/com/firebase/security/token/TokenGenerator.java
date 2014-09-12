@@ -82,7 +82,7 @@ public class TokenGenerator {
                 }
             }
         } catch (JSONException e) {
-            throw new JwtEncodingException(e);
+            throw new RuntimeException(e);
         }
 
         String token = computeToken(claims);
