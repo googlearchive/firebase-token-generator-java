@@ -55,6 +55,9 @@ public class TokenGenerator {
             claims.put("v", TOKEN_VERSION);
             claims.put("iat", new Date().getTime() / 1000);
 
+            Boolean isAdminToken = (options != null && options.isAdmin());
+            validateToken(data, isAdminToken);
+
             if (data != null && data.size() > 0) {
                 claims.put("d", new JSONObject(data));
             }
@@ -79,13 +82,26 @@ public class TokenGenerator {
                 }
             }
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            throw new JwtEncodingException(e);
         }
 
-        return computeToken(claims);
+        String token = computeToken(claims);
+        if (token.length() > 1024) {
+            throw new JwtEncodingException("Generated token is too long. The token cannot be longer than 1024 bytes.");
+        }
+        return token;
     }
 
     private String computeToken(JSONObject claims) {
         return JWTEncoder.encode(claims, firebaseSecret);
+    }
+
+    private void validateToken(Map<String, Object> data, Boolean isAdminToken) {
+        Boolean containsUid = (data != null && data.containsKey("uid"));
+        if ((!containsUid && !isAdminToken) || (containsUid && !(data.get("uid") instanceof String))) {
+            throw new IllegalArgumentException("Data payload must contain a \"uid\" key that must be a string.");
+        } else if (containsUid && data.get("uid").toString().length() > 256) {
+            throw new IllegalArgumentException("Data payload must contain a \"uid\" key that must not be longer than 256 characters.");
+        }
     }
 }
