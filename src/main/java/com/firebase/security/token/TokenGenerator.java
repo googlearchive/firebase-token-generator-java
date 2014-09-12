@@ -55,8 +55,8 @@ public class TokenGenerator {
             claims.put("v", TOKEN_VERSION);
             claims.put("iat", new Date().getTime() / 1000);
 
-            Boolean isAdminToken = (options != null && options.isAdmin());
-            validateToken(data, isAdminToken);
+            boolean isAdminToken = (options != null && options.isAdmin());
+            validateToken("TokenGenerator.createToken", data, isAdminToken);
 
             if (data != null && data.size() > 0) {
                 claims.put("d", new JSONObject(data));
@@ -87,7 +87,7 @@ public class TokenGenerator {
 
         String token = computeToken(claims);
         if (token.length() > 1024) {
-            throw new JwtEncodingException("Generated token is too long. The token cannot be longer than 1024 bytes.");
+            throw new IllegalArgumentException("TokenGenerator.createToken: Generated token is too long. The token cannot be longer than 1024 bytes.");
         }
         return token;
     }
@@ -96,12 +96,12 @@ public class TokenGenerator {
         return JWTEncoder.encode(claims, firebaseSecret);
     }
 
-    private void validateToken(Map<String, Object> data, Boolean isAdminToken) {
-        Boolean containsUid = (data != null && data.containsKey("uid"));
+    private void validateToken(String functionName, Map<String, Object> data, boolean isAdminToken) {
+        boolean containsUid = (data != null && data.containsKey("uid"));
         if ((!containsUid && !isAdminToken) || (containsUid && !(data.get("uid") instanceof String))) {
-            throw new IllegalArgumentException("Data payload must contain a \"uid\" key that must be a string.");
+            throw new IllegalArgumentException(functionName + ": Data payload must contain a \"uid\" key that must be a string.");
         } else if (containsUid && data.get("uid").toString().length() > 256) {
-            throw new IllegalArgumentException("Data payload must contain a \"uid\" key that must not be longer than 256 characters.");
+            throw new IllegalArgumentException(functionName + ": Data payload must contain a \"uid\" key that must not be longer than 256 characters.");
         }
     }
 }

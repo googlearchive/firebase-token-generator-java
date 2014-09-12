@@ -217,7 +217,7 @@ public class BasicTokenGeneratorTest {
         String token = tokenGenerator.createToken(payload);
     }
 
-    @Test(expected = JwtEncodingException.class)
+    @Test(expected = java.lang.IllegalArgumentException.class)
     public void disallowTokensTooLong() {
         Map<String, Object> payload = new HashMap<String, Object>();
         payload.put("uid", "blah");
