@@ -15,6 +15,13 @@ public class TokenOptions {
     private boolean debug;
 
     /**
+     * Copies the date, since Date objects are mutable.
+     */
+    private Date copyDate(Date date) {
+        return (date != null) ? new Date(date.getTime()) : null;
+    }
+
+    /**
      * Default constructor.
      */
     public TokenOptions() {
@@ -34,8 +41,8 @@ public class TokenOptions {
      */
     public TokenOptions(Date expires, Date notBefore, boolean admin, boolean debug) {
         super();
-        this.expires = expires;
-        this.notBefore = notBefore;
+        this.expires = copyDate(expires);
+        this.notBefore = copyDate(notBefore);
         this.admin = admin;
         this.debug = debug;
     }
@@ -51,7 +58,7 @@ public class TokenOptions {
      * @param expires the expires to set
      */
     public void setExpires(Date expires) {
-        this.expires = expires;
+        this.expires = copyDate(expires);
     }
 
     /**
@@ -65,7 +72,7 @@ public class TokenOptions {
      * @param notBefore the notBefore to set
      */
     public void setNotBefore(Date notBefore) {
-        this.notBefore = notBefore;
+        this.notBefore = copyDate(notBefore);
     }
 
     /**
