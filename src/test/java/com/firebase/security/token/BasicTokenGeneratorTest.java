@@ -239,7 +239,6 @@ public class BasicTokenGeneratorTest {
         Map<String, Object> payload2 = new HashMap<String, Object>();
         payload2.put("foo", "bar");
         String token2 = tokenGenerator.createToken(payload2, tokenOptions);
-        Map<String, Object> payload3 = new HashMap<String, Object>();
     }
 
     @Test(expected = java.lang.IllegalArgumentException.class)
