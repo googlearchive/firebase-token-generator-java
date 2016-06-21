@@ -17,7 +17,7 @@
   </parent>
   <organization>
     <name>Firebase</name>
-    <url>https://www.firebase.com/</url>
+    <url>https://firebase.google.com/</url>
   </organization>
   <url>https://www.firebase.com/docs/security/authentication.html</url>
   <scm>
@@ -29,7 +29,6 @@
     <developer>
       <id>firebase</id>
       <name>Firebase</name>
-      <email>support@firebase.com</email>
       <organization>Firebase</organization>
     </developer>
   </developers>
